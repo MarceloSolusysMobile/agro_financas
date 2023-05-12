@@ -15,8 +15,16 @@ class HomePage extends StatelessWidget {
     Financa(mes: 'Maio', valor: 44000),
     Financa(mes: 'Junho', valor: 44000),
     Financa(mes: 'Julho', valor: 10000),
-    Financa(mes: 'Agost', valor: 14000)
+    Financa(mes: 'Agost', valor: 14000.40)
   ];
+
+  double returnValorTotal(List<Financa> financas) {
+    double valorTotal = 0;
+    for (var financa in financas) {
+      valorTotal += financa.valor;
+    }
+    return valorTotal;
+  }
 
   //Retorna o maior e o menor valor da Lista de finanças
   List<double> returnValoresEixoY(List<Financa> financas) {
@@ -33,6 +41,11 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Agro Finanças'),
+          backgroundColor: Colors.green[900],
+        ),
         floatingActionButton: FloatingActionButton.extended(
             backgroundColor: Colors.green,
             onPressed: () {},
@@ -41,16 +54,19 @@ class HomePage extends StatelessWidget {
           color: Colors.green[900],
           child: Column(
             children: [
-              const Text(
-                'R\$ 900,00',
-                style: TextStyle(
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                'R\$ ${returnValorTotal(financasList)}',
+                style: const TextStyle(
                   fontSize: 30,
                   color: Colors.lightGreenAccent,
                   fontWeight: FontWeight.w900,
                 ),
               ),
               const Text(
-                'Gasto Total do mês',
+                'Gasto Total',
                 style: TextStyle(
                   fontSize: 20,
                   color: Colors.lightGreenAccent,
@@ -132,12 +148,25 @@ class HomePage extends StatelessWidget {
                         return Column(
                           children: [
                             ListTile(
-                              onTap: () {},
+                              trailing: IconButton(
+                                onPressed: () {},
+                                icon: const Icon(
+                                  Icons.remove_red_eye_outlined,
+                                  color: Colors.green,
+                                ),
+                                tooltip: 'Detalhar',
+                              ),
                               leading: const Icon(Icons.attach_money_rounded),
                               title: Text(
                                   'Gastos Totais do Mês de ${financasList[index].mes}'),
-                              subtitle:
-                                  Text('R\$ ${financasList[index].valor}'),
+                              subtitle: Text(
+                                'R\$ ${financasList[index].valor}',
+                                style: const TextStyle(
+                                  color: Colors.green,
+                                  fontWeight: FontWeight.w900,
+                                ),
+                              ),
+                              tileColor: Colors.grey[200],
                             ),
                             const Divider()
                           ],
